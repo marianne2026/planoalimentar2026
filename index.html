@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Plano Alimentar</title>
+<style>
+  :root {
+    --bg: #faf7f2;
+    --card: #ffffff;
+    --ink: #2b2621;
+    --muted: #857a6e;
+    --line: #ece5da;
+    --accent: #c17a4a;
+    --accent-soft: #f3e3d3;
+    --carb: #c17a4a;
+    --protein: #7a9b6e;
+    --fat: #b08bc4;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 24px 16px 60px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: flex;
+    justify-content: center;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+    margin: 0 0 4px;
+    font-weight: 700;
+  }
+
+  header p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  header p.period {
+    margin-top: 6px;
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 4px 12px;
+    border-radius: 999px;
+  }
+
+  .total-day {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 16px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+  }
+
+  .total-day .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .total-day .label {
+    font-size: 0.8rem;
+    opacity: 0.75;
+  }
+
+  .total-day .value {
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .total-macros {
+    display: flex;
+    gap: 14px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    font-size: 0.75rem;
+  }
+
+  .total-macros span {
+    opacity: 0.9;
+  }
+
+  .meal {
+    background: var(--card);
+    border-radius: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+
+  .meal-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--accent-soft);
+  }
+
+  .meal-header h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .meal-kcal {
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .macro-bar {
+    display: flex;
+    gap: 8px;
+    padding: 10px 18px;
+    background: #fbf8f4;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.72rem;
+  }
+
+  .macro-pill {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .dot.carb { background: var(--carb); }
+  .dot.protein { background: var(--protein); }
+  .dot.fat { background: var(--fat); }
+
+  .macro-pill .amt { color: var(--muted); font-weight: 500; }
+
+  ul.items {
+    list-style: none;
+    margin: 0;
+    padding: 4px 18px 14px;
+  }
+
+  ul.items > li {
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 0.92rem;
+  }
+
+  ul.items > li:last-child {
+    border-bottom: none;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .item-name {
+    color: var(--ink);
+  }
+
+  .item-qty {
+    color: var(--muted);
+    font-size: 0.82rem;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .alt-list {
+    margin-top: 6px;
+    padding-left: 14px;
+    border-left: 2px solid var(--accent-soft);
+  }
+
+  .alt-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 0.85rem;
+    padding: 3px 0;
+  }
+
+  .alt-tag {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-right: 6px;
+  }
+
+  .alt-row .item-name {
+    color: var(--muted);
+  }
+
+  .obs {
+    margin: 10px 18px 14px;
+    padding: 10px 12px;
+    background: #f6f1e9;
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .note {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.72rem;
+    margin-top: 24px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>🍽️ Meu Plano Alimentar</h1>
+    <p>Consulta rápida das refeições do dia</p>
+    <p class="period">12/09/2026 até 12/10/2026</p>
+  </header>
+
+  <div class="total-day">
+    <div class="top-row">
+      <span class="label">Total estimado do dia</span>
+      <span class="value">~2120 kcal</span>
+    </div>
+    <div class="total-macros">
+      <span>🟠 Carb ~265g</span>
+      <span>🟢 Prot ~115g</span>
+      <span>🟣 Gord ~68g</span>
+    </div>
+  </div>
+
+  <!-- CAFÉ DA MANHÃ -->
+  <div class="meal">
+    <div class="meal-header">
+      <h2>☀️ Café da Manhã</h2>
+      <span class="meal-kcal">~545 kcal</span>
+    </div>
+    <div class="macro-bar">
+      <span class="macro-pill"><span class="dot carb"></span>Carb <span class="amt">55g</span></span>
+      <span class="macro-pill"><span class="dot protein"></span>Prot <span class="amt">27g</span></span>
+      <span class="macro-pill"><span class="dot fat"></span>Gord <span class="amt">22g</span></span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Pão Wickbold</span><span class="item-qty">2 fatias · 67g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Requeijão / creme de ricota</span><span class="item-qty">30g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Ovo</span><span class="item-qty">2 unidades</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Queijo muçarela</span><span class="item-qty">20g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Manga</span><span class="item-qty">150g</span></div>
+        <div class="alt-list">
+          <div class="alt-row"><span class="item-name"><span class="alt-tag">op.</span>Kiwi</span><span class="item-qty">180g</span></div>
+        </div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Café coado puro</span><span class="item-qty">300ml</span></div>
+      </li>
+    </ul>
+    <div class="obs">Obs: caso queira colocar 2 fatias de queijo, pode colocar apenas 1 ovo.</div>
+  </div>
+
+  <!-- PRÉ-TREINO -->
+  <div class="meal">
+    <div class="meal-header">
+      <h2>💪 Pré-treino</h2>
+      <span class="meal-kcal">~225 kcal</span>
+    </div>
+    <div class="macro-bar">
+      <span class="macro-pill"><span class="dot carb"></span>Carb <span class="amt">30g</span></span>
+      <span class="macro-pill"><span class="dot protein"></span>Prot <span class="amt">25g</span></span>
+      <span class="macro-pill"><span class="dot fat"></span>Gord <span class="amt">2g</span></span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Whey protein</span><span class="item-qty">30g · 1 dosador + água</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Banana</span><span class="item-qty">1 unidade</span></div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ALMOÇO -->
+  <div class="meal">
+    <div class="meal-header">
+      <h2>🍚 Almoço</h2>
+      <span class="meal-kcal">~545 kcal</span>
+    </div>
+    <div class="macro-bar">
+      <span class="macro-pill"><span class="dot carb"></span>Carb <span class="amt">75g</span></span>
+      <span class="macro-pill"><span class="dot protein"></span>Prot <span class="amt">24g</span></span>
+      <span class="macro-pill"><span class="dot fat"></span>Gord <span class="amt">18g</span></span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Macarrão sem óleo</span><span class="item-qty">130g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Proteína de soja refogada</span><span class="item-qty">60g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Amêndoas laminadas</span><span class="item-qty">30g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Legumes e/ou salada</span><span class="item-qty">100g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Suco de laranja</span><span class="item-qty">250ml</span></div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- LANCHE -->
+  <div class="meal">
+    <div class="meal-header">
+      <h2>🍌 Lanche da Tarde</h2>
+      <span class="meal-kcal">~465 kcal</span>
+    </div>
+    <div class="macro-bar">
+      <span class="macro-pill"><span class="dot carb"></span>Carb <span class="amt">58g</span></span>
+      <span class="macro-pill"><span class="dot protein"></span>Prot <span class="amt">23g</span></span>
+      <span class="macro-pill"><span class="dot fat"></span>Gord <span class="amt">17g</span></span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Aveia</span><span class="item-qty">30g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Iogurte Batavo zero</span><span class="item-qty">150g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Semente de chia</span><span class="item-qty">15g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Leite desnatado</span><span class="item-qty">45ml</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Leite em pó desnatado</span><span class="item-qty">10g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Castanha do Pará</span><span class="item-qty">2 unidades</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Semente de abóbora</span><span class="item-qty">10g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Banana média</span><span class="item-qty">70g</span></div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- JANTAR -->
+  <div class="meal">
+    <div class="meal-header">
+      <h2>🌙 Jantar</h2>
+      <span class="meal-kcal">~270 kcal</span>
+    </div>
+    <div class="macro-bar">
+      <span class="macro-pill"><span class="dot carb"></span>Carb <span class="amt">29g</span></span>
+      <span class="macro-pill"><span class="dot protein"></span>Prot <span class="amt">15g</span></span>
+      <span class="macro-pill"><span class="dot fat"></span>Gord <span class="amt">9g</span></span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Mandioca cozida</span><span class="item-qty">60g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Proteína de soja refogada</span><span class="item-qty">90g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Legumes</span><span class="item-qty">100g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Azeite de oliva</span><span class="item-qty">8g</span></div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- CEIA -->
+  <div class="meal">
+    <div class="meal-header">
+      <h2>🌛 Ceia</h2>
+      <span class="meal-kcal">~70 kcal</span>
+    </div>
+    <div class="macro-bar">
+      <span class="macro-pill"><span class="dot carb"></span>Carb <span class="amt">18g</span></span>
+      <span class="macro-pill"><span class="dot protein"></span>Prot <span class="amt">1g</span></span>
+      <span class="macro-pill"><span class="dot fat"></span>Gord <span class="amt">0g</span></span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Fruta</span><span class="item-qty">1 porção</span></div>
+        <div class="alt-list">
+          <div class="alt-row"><span class="item-name"><span class="alt-tag">op.</span>Maçã</span><span class="item-qty"></span></div>
+          <div class="alt-row"><span class="item-name"><span class="alt-tag">op.</span>Caqui</span><span class="item-qty"></span></div>
+          <div class="alt-row"><span class="item-name"><span class="alt-tag">op.</span>Kiwi</span><span class="item-qty"></span></div>
+          <div class="alt-row"><span class="item-name"><span class="alt-tag">op.</span>Mamão</span><span class="item-qty"></span></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <p class="note">As calorias e macros são estimativas aproximadas com base em valores nutricionais médios dos alimentos e podem variar conforme marca e preparo.</p>
+
+</div>
+</body>
+</html>
