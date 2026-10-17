@@ -262,6 +262,12 @@
     display:inline-block; background:var(--accent-soft); color:var(--accent);
     font-weight:700; font-size:.78rem; padding:4px 12px; border-radius:999px;
   }
+  .evo-table { width:100%; border-collapse:collapse; font-size:.82rem; }
+  .evo-table th { padding:8px 10px; text-align:center; font-weight:700; color:var(--ink); border-bottom:1px solid var(--line); background:#fbf8f4; }
+  .evo-table td { padding:8px 10px; text-align:center; border-bottom:1px dashed var(--line); }
+  .evo-table tr:last-child td { border-bottom:none; }
+  .evo-table td.lbl { text-align:left; color:var(--ink); }
+  .evo-table .delta { color:var(--muted); font-size:.74rem; white-space:nowrap; }
 </style>
 </head>
 <body>
@@ -272,10 +278,65 @@
     <p>Consulta rápida das refeições do dia</p>
   </header>
 
-  <nav class="tabs"><button class="tab" data-i="0"><span class="t1">Meu gasto</span><span class="t2">TMB e gasto total</span></button><button class="tab" data-i="1"><span class="t1">Plano 1</span><span class="t2">12/09/2026 a 12/10/2026</span></button><button class="tab active" data-i="2"><span class="t1">Plano 2</span><span class="t2">17/10/2026 a 17/11/2026</span></button></nav>
+  <nav class="tabs"><button class="tab" data-i="0"><span class="t1">Evolução</span><span class="t2">Composição e gasto</span></button><button class="tab" data-i="1"><span class="t1">Plano 1</span><span class="t2">12/09/2026 a 12/10/2026</span></button><button class="tab active" data-i="2"><span class="t1">Plano 2</span><span class="t2">17/10/2026 a 17/11/2026</span></button></nav>
 
 <section class="panel" id="p-perfil">
-  <p class="panel-period"><span>Perfil · feminino · 31 anos · 53,15 kg · 164 cm</span></p>
+  <p class="panel-period"><span>Evolução · 11/09/2026 → 14/10/2026</span></p>
+
+  <div class="meal">
+    <div class="meal-header">
+      <h2>📏 Circunferências (cm)</h2>
+    </div>
+    <table class="evo-table">
+<thead><tr><th></th><th>11/09/2026</th><th>14/10/2026</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Pescoço</td><td>—</td><td>—</td></tr>
+<tr><td class="lbl">Ombros</td><td>—</td><td>—</td></tr>
+<tr><td class="lbl">Peitoral</td><td>—</td><td>—</td></tr>
+<tr><td class="lbl">Cintura</td><td>65</td><td>64,5 <span class="delta">(−0,5)</span></td></tr>
+<tr><td class="lbl">Abdômen</td><td>67,5</td><td>68 <span class="delta">(+0,5)</span></td></tr>
+<tr><td class="lbl">Quadril</td><td>90,5</td><td>91 <span class="delta">(+0,5)</span></td></tr>
+<tr><td class="lbl">Braço direito (relaxado)</td><td>25,5</td><td>25,5</td></tr>
+<tr><td class="lbl">Braço direito (contraído)</td><td>26,5</td><td>27 <span class="delta">(+0,5)</span></td></tr>
+<tr><td class="lbl">Antebraço direito</td><td>—</td><td>—</td></tr>
+<tr><td class="lbl">Coxa proximal direita</td><td>51,5</td><td>51,5</td></tr>
+<tr><td class="lbl">Coxa medial direita</td><td>—</td><td>—</td></tr>
+<tr><td class="lbl">Coxa distal direita</td><td>—</td><td>—</td></tr>
+<tr><td class="lbl">Panturrilha direita</td><td>35</td><td>35</td></tr>
+</tbody>
+</table>
+  </div>
+
+  <div class="meal">
+    <div class="meal-header">
+      <h2>📈 Resultados</h2>
+    </div>
+    <table class="evo-table">
+<thead><tr><th></th><th>11/09/2026</th><th>14/10/2026</th></tr></thead>
+<tbody>
+<tr><td class="lbl">Peso (kg)</td><td>53,7</td><td>53,3 <span class="delta">(−0,4)</span></td></tr>
+<tr><td class="lbl">Peso ideal (kg)</td><td>49,76 – 66,97</td><td>49,76 – 66,97</td></tr>
+<tr><td class="lbl">Altura (cm)</td><td>164</td><td>164</td></tr>
+<tr><td class="lbl">IMC (kg/m²)</td><td>19,97</td><td>19,82 <span class="delta">(−0,15)</span></td></tr>
+<tr><td class="lbl">Classif. IMC</td><td>Eutrofia</td><td>Eutrofia</td></tr>
+<tr><td class="lbl">% gordura</td><td>15,63</td><td>—</td></tr>
+<tr><td class="lbl">Massa gorda (kg)</td><td>8,39</td><td>—</td></tr>
+<tr><td class="lbl">% MLG</td><td>84,37</td><td>—</td></tr>
+<tr><td class="lbl">MLG (kg)</td><td>45,31</td><td>—</td></tr>
+<tr><td class="lbl">DC (kg/L)</td><td>1,0631</td><td>—</td></tr>
+<tr><td class="lbl">Somatório das dobras</td><td>62,8</td><td>—</td></tr>
+<tr><td class="lbl">RCQ</td><td>0,72</td><td>0,71 <span class="delta">(−0,01)</span></td></tr>
+<tr><td class="lbl">Risco metabólico</td><td>Baixo</td><td>Baixo</td></tr>
+<tr><td class="lbl">RCE</td><td>0,4</td><td>0,39</td></tr>
+<tr><td class="lbl">CMB (cm)</td><td>22,5</td><td>—</td></tr>
+<tr><td class="lbl">Classif. CMB</td><td>Eutrofia</td><td>—</td></tr>
+<tr><td class="lbl">Massa residual (kg)</td><td>11,22</td><td>11,14 <span class="delta">(−0,08)</span></td></tr>
+</tbody>
+</table>
+    <div class="obs">"—" indica medida não registrada na avaliação. As variações entre parênteses são em relação a 11/09/2026.</div>
+  </div>
+
+  <p class="panel-period" style="margin-top:28px"><span>Gasto energético · feminino · 31 anos · 53,15 kg · 164 cm</span></p>
 
   <div class="total-day">
     <div class="top-row">
@@ -318,21 +379,6 @@
       </li>
     </ul>
     <div class="obs">Atividade moderada = 3 a 5 treinos por semana.</div>
-  </div>
-
-  <div class="meal">
-    <div class="meal-header">
-      <h2>📊 Comparação com os planos</h2>
-      <span class="meal-kcal">vs ~1920 kcal</span>
-    </div>
-    <ul class="items">
-      <li>
-        <div class="row"><span class="item-name">Plano 1 · ~2120 kcal</span><span class="item-qty">+200 kcal</span></div>
-      </li>
-      <li>
-        <div class="row"><span class="item-name">Plano 2 · ~1970 kcal</span><span class="item-qty">+50 kcal</span></div>
-      </li>
-    </ul>
   </div>
 
   <p class="note">Estimativas baseadas em fórmulas populacionais; o gasto real varia de pessoa para pessoa. Para metas de composição corporal, valide com um nutricionista.</p>
