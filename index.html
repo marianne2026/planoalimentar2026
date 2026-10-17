@@ -245,6 +245,23 @@
     margin-top: 24px;
     line-height: 1.5;
   }
+
+  header p.period { display:none; }
+  .tabs { display:flex; gap:8px; margin-bottom:20px; overflow-x:auto; padding-bottom:4px; }
+  .tab {
+    flex:1 0 auto; border:1px solid var(--line); background:var(--card); color:var(--muted);
+    border-radius:14px; padding:10px 14px; font:inherit; cursor:pointer; text-align:center; line-height:1.25;
+  }
+  .tab .t1 { display:block; font-weight:700; font-size:.92rem; }
+  .tab .t2 { display:block; font-size:.72rem; }
+  .tab.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .panel { display:none; }
+  .panel.active { display:block; }
+  .panel-period { text-align:center; margin:0 0 16px; }
+  .panel-period span {
+    display:inline-block; background:var(--accent-soft); color:var(--accent);
+    font-weight:700; font-size:.78rem; padding:4px 12px; border-radius:999px;
+  }
 </style>
 </head>
 <body>
@@ -253,9 +270,75 @@
   <header>
     <h1>🍽️ Meu Plano Alimentar</h1>
     <p>Consulta rápida das refeições do dia</p>
-    <p class="period">12/09/2026 até 12/10/2026</p>
   </header>
 
+  <nav class="tabs"><button class="tab" data-i="0"><span class="t1">Meu gasto</span><span class="t2">TMB e gasto total</span></button><button class="tab" data-i="1"><span class="t1">Plano 1</span><span class="t2">12/09/2026 a 12/10/2026</span></button><button class="tab active" data-i="2"><span class="t1">Plano 2</span><span class="t2">17/10/2026 a 17/11/2026</span></button></nav>
+
+<section class="panel" id="p-perfil">
+  <p class="panel-period"><span>Perfil · feminino · 31 anos · 53,15 kg · 164 cm</span></p>
+
+  <div class="total-day">
+    <div class="top-row">
+      <span class="label">Gasto total estimado (atividade moderada)</span>
+      <span class="value">~1920 kcal</span>
+    </div>
+    <div class="total-macros">
+      <span>🔥 TMB ~1240 kcal</span>
+      <span>✖️ Fator de atividade 1,55</span>
+    </div>
+  </div>
+
+  <div class="meal">
+    <div class="meal-header">
+      <h2>🧬 Taxa Metabólica Basal</h2>
+      <span class="meal-kcal">~1240 kcal</span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Mifflin-St Jeor (referência)</span><span class="item-qty">1.240 kcal</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Harris-Benedict revisada</span><span class="item-qty">1.313 kcal</span></div>
+      </li>
+    </ul>
+    <div class="obs">Mifflin-St Jeor: 10 × 53,15 + 6,25 × 164 − 5 × 31 − 161. A TMB é o gasto em repouso, sem contar atividade.</div>
+  </div>
+
+  <div class="meal">
+    <div class="meal-header">
+      <h2>⚡ Gasto Total do Dia</h2>
+      <span class="meal-kcal">~1920 kcal</span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">TMB × 1,55 (Mifflin-St Jeor)</span><span class="item-qty">1.920 kcal</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">TMB × 1,55 (Harris-Benedict)</span><span class="item-qty">2.035 kcal</span></div>
+      </li>
+    </ul>
+    <div class="obs">Atividade moderada = 3 a 5 treinos por semana.</div>
+  </div>
+
+  <div class="meal">
+    <div class="meal-header">
+      <h2>📊 Comparação com os planos</h2>
+      <span class="meal-kcal">vs ~1920 kcal</span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Plano 1 · ~2120 kcal</span><span class="item-qty">+200 kcal</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Plano 2 · ~1970 kcal</span><span class="item-qty">+50 kcal</span></div>
+      </li>
+    </ul>
+  </div>
+
+  <p class="note">Estimativas baseadas em fórmulas populacionais; o gasto real varia de pessoa para pessoa. Para metas de composição corporal, valide com um nutricionista.</p>
+</section>
+<section class="panel" id="p0">
+  <p class="panel-period"><span>Plano 1 · 12/09/2026 até 12/10/2026</span></p>
   <div class="total-day">
     <div class="top-row">
       <span class="label">Total estimado do dia</span>
@@ -445,9 +528,206 @@
       </li>
     </ul>
   </div>
+</section>
+<section class="panel active" id="p1">
+  <p class="panel-period"><span>Plano 2 · 17/10/2026 até 17/11/2026</span></p>
+  <div class="total-day">
+    <div class="top-row">
+      <span class="label">Total estimado do dia</span>
+      <span class="value">~1970 kcal</span>
+    </div>
+    <div class="total-macros">
+      <span>🟠 Carb ~245g</span>
+      <span>🟢 Prot ~120g</span>
+      <span>🟣 Gord ~58g</span>
+    </div>
+  </div>
+
+  <!-- CAFÉ DA MANHÃ -->
+  <div class="meal">
+    <div class="meal-header">
+      <h2>☀️ Café da Manhã</h2>
+      <span class="meal-kcal">~625 kcal</span>
+    </div>
+    <div class="macro-bar">
+      <span class="macro-pill"><span class="dot carb"></span>Carb <span class="amt">70g</span></span>
+      <span class="macro-pill"><span class="dot protein"></span>Prot <span class="amt">30g</span></span>
+      <span class="macro-pill"><span class="dot fat"></span>Gord <span class="amt">23g</span></span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Pão Wickbold</span><span class="item-qty">3 fatias · 100g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Requeijão / creme de ricota</span><span class="item-qty">30g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Ovo</span><span class="item-qty">2 unidades</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Queijo muçarela</span><span class="item-qty">20g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Manga</span><span class="item-qty">150g</span></div>
+        <div class="alt-list">
+          <div class="alt-row"><span class="item-name"><span class="alt-tag">op.</span>Kiwi</span><span class="item-qty">180g</span></div>
+        </div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Café coado puro</span><span class="item-qty">300ml</span></div>
+      </li>
+    </ul>
+    <div class="obs">Obs: caso queira colocar 2 fatias de queijo, pode colocar apenas 1 ovo.</div>
+  </div>
+
+  <!-- PRÉ-TREINO -->
+  <div class="meal">
+    <div class="meal-header">
+      <h2>💪 Pré-treino</h2>
+      <span class="meal-kcal">~225 kcal</span>
+    </div>
+    <div class="macro-bar">
+      <span class="macro-pill"><span class="dot carb"></span>Carb <span class="amt">30g</span></span>
+      <span class="macro-pill"><span class="dot protein"></span>Prot <span class="amt">25g</span></span>
+      <span class="macro-pill"><span class="dot fat"></span>Gord <span class="amt">2g</span></span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Whey protein</span><span class="item-qty">30g · 1 dosador + água</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Banana</span><span class="item-qty">1 unidade</span></div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ALMOÇO -->
+  <div class="meal">
+    <div class="meal-header">
+      <h2>🍚 Almoço</h2>
+      <span class="meal-kcal">~490 kcal</span>
+    </div>
+    <div class="macro-bar">
+      <span class="macro-pill"><span class="dot carb"></span>Carb <span class="amt">60g</span></span>
+      <span class="macro-pill"><span class="dot protein"></span>Prot <span class="amt">28g</span></span>
+      <span class="macro-pill"><span class="dot fat"></span>Gord <span class="amt">16g</span></span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Arroz</span><span class="item-qty">100g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Feijão</span><span class="item-qty">65g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Proteína de soja</span><span class="item-qty">90g</span></div>
+        <div class="alt-list">
+          <div class="alt-row"><span class="item-name"><span class="alt-tag">op.</span>Tofu</span><span class="item-qty">150g</span></div>
+          <div class="alt-row"><span class="item-name"><span class="alt-tag">op.</span>Ovo</span><span class="item-qty">2 unidades</span></div>
+        </div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Amêndoas laminadas</span><span class="item-qty">30g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Legumes e salada</span><span class="item-qty">livre</span></div>
+      </li>
+    </ul>
+    <div class="obs">Opção: 1 marmita Livup de 300g no lugar do prato acima (conferir calorias no rótulo).</div>
+  </div>
+
+  <!-- LANCHE -->
+  <div class="meal">
+    <div class="meal-header">
+      <h2>🍌 Lanche da Tarde · Overnight</h2>
+      <span class="meal-kcal">~300 kcal</span>
+    </div>
+    <div class="macro-bar">
+      <span class="macro-pill"><span class="dot carb"></span>Carb <span class="amt">26g</span></span>
+      <span class="macro-pill"><span class="dot protein"></span>Prot <span class="amt">15g</span></span>
+      <span class="macro-pill"><span class="dot fat"></span>Gord <span class="amt">16g</span></span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Aveia</span><span class="item-qty">15g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Iogurte Batavo zero</span><span class="item-qty">150g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Semente de chia</span><span class="item-qty">15g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Semente de abóbora</span><span class="item-qty">10g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Castanha do Pará</span><span class="item-qty">2 unidades</span></div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- JANTAR -->
+  <div class="meal">
+    <div class="meal-header">
+      <h2>🌙 Jantar</h2>
+      <span class="meal-kcal">~265 kcal</span>
+    </div>
+    <div class="macro-bar">
+      <span class="macro-pill"><span class="dot carb"></span>Carb <span class="amt">42g</span></span>
+      <span class="macro-pill"><span class="dot protein"></span>Prot <span class="amt">21g</span></span>
+      <span class="macro-pill"><span class="dot fat"></span>Gord <span class="amt">1g</span></span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Arroz</span><span class="item-qty">60g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Feijão</span><span class="item-qty">65g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Proteína de soja</span><span class="item-qty">90g</span></div>
+      </li>
+      <li>
+        <div class="row"><span class="item-name">Legumes e salada</span><span class="item-qty">livre</span></div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- CEIA -->
+  <div class="meal">
+    <div class="meal-header">
+      <h2>🌛 Ceia</h2>
+      <span class="meal-kcal">~70 kcal</span>
+    </div>
+    <div class="macro-bar">
+      <span class="macro-pill"><span class="dot carb"></span>Carb <span class="amt">18g</span></span>
+      <span class="macro-pill"><span class="dot protein"></span>Prot <span class="amt">1g</span></span>
+      <span class="macro-pill"><span class="dot fat"></span>Gord <span class="amt">0g</span></span>
+    </div>
+    <ul class="items">
+      <li>
+        <div class="row"><span class="item-name">Fruta</span><span class="item-qty">1 porção</span></div>
+        <div class="alt-list">
+          <div class="alt-row"><span class="item-name"><span class="alt-tag">op.</span>Maçã</span><span class="item-qty"></span></div>
+          <div class="alt-row"><span class="item-name"><span class="alt-tag">op.</span>Caqui</span><span class="item-qty"></span></div>
+          <div class="alt-row"><span class="item-name"><span class="alt-tag">op.</span>Kiwi</span><span class="item-qty"></span></div>
+          <div class="alt-row"><span class="item-name"><span class="alt-tag">op.</span>Mamão</span><span class="item-qty"></span></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
 
   <p class="note">As calorias e macros são estimativas aproximadas com base em valores nutricionais médios dos alimentos e podem variar conforme marca e preparo.</p>
 
 </div>
+<script>
+  const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.toggle('active',x===t));
+    panels.forEach((p,i)=>p.classList.toggle('active',i==t.dataset.i));
+    window.scrollTo({top:0});
+  }));
+</script>
 </body>
 </html>
